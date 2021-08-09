@@ -1,0 +1,51 @@
+.dashboard-container{
+    margin:auto;
+    margin-left: 40px;
+    display: flex;
+    flex-direction: row;
+}
+
+/* COntrol */
+.control-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    /* align-items: center; */
+    font-family: Arial, Helvetica, sans-serif;
+    /* border-right: 1px solid black; */
+    margin-right: 20px;
+}
+
+.control-container h3{
+    font-size: 1.5rem;
+}
+
+.control-container div{
+    margin: 20px 0 20px 0;
+    padding: 0 0 20px 0;
+    /* border-bottom: 1px solid black; */
+}
+.input-file{
+}
+.filter{
+}
+
+
+/* Chart */
+.chart-container{
+    width: 90vh;
+}
+
+#tree{
+    border:1px solid black;
+}
+
+.tree-text{
+    font-family: Helvetica, Arial,  sans-serif;
+}
+
+/* Circle */
+
+.circle{
+    cursor: pointer;
+}

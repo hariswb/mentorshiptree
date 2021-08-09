@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mentorship Tree</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <div class="control-container">
+        <div>
+          <h3>Mentorship Tree</h3>
+        </div>
+        <div class="input-file">
+          <input type="file" id="input" />
+        </div>
+        <div class="filter">
+          <div>
+            <label class="" for="naming-root">Root Name: </label> <br>
+            <input type="test" id="naming-root" placeholder="" />
+          </div>
+          <div>
+            <label class="" for="search-student">Focus: </label><br>
+            <input
+              type="search"
+              id="search-student"
+              list="brow"
+              placeholder="Set focus to a teacher"
+            />
+            <datalist id="brow"> </datalist>
+          </div>
+        </div>
+        <div class="download">
+          <button id="download-svg">Download As PNG</button>
+        </div>
+      </div>
+      <div class="chart-container">
+        <div id="tree"></div>
+      </div>
+    </div>
+
+    <script src="./js/d3.v6.min.js"></script>
+
+    <!-- <script src="./js/read-excel-file.min.js"></script> -->
+    <script src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script>
+
+    <script src="https://unpkg.com/file-saver@2.0.0-rc.2/dist/FileSaver.min.js"></script>
+
+    <script src="./js/save-svg.js"></script>
+    <script src="./js/clean-data.js"></script>
+    <script src="./js/draw-chart.js"></script>
+
+    <script>
+      var input = document.getElementById("input");
+
+      input.addEventListener("change", function () {
+        readXlsxFile(input.files[0]).then(function (rows) {
+          let records = rows.map((row) => {
+            return {
+              teacher_name: row[0],
+              teacher_email: row[1],
+              student_name: row[2],
+              student_email: row[3],
+            };
+          });
+
+          records.shift();
+          let tree = reformatData(records);
+          Draw(tree);
+        });
+      });
+
+      var records_dummy = JSON.parse(
+        `[{"teacher_name":"Bob","teacher_email":"bob@gmail.com","student_name":"Chris","student_email":"chris@gmail.com"},{"teacher_name":"Bob","teacher_email":"bob@gmail.com","student_name":"Mike","student_email":"mike@gmail.com"},{"teacher_name":"Bob","teacher_email":"bob@gmail.com","student_name":"Phil","student_email":"phil@gmail.com"},{"teacher_name":"Pete","teacher_email":"pete@gmail.com","student_name":"Lon","student_email":"lon@gmail.com"},{"teacher_name":"Pete","teacher_email":"pete@gmail.com","student_name":"Mark","student_email":"mark@gmail.com"},{"teacher_name":"Pete","teacher_email":"pete@gmail.com","student_name":"Jim","student_email":"jim@gmail.com"},{"teacher_name":"Pete","teacher_email":"pete@gmail.com","student_name":"Earl","student_email":"earl@gmail.com"},{"teacher_name":"Phil","teacher_email":"phil@gmail.com","student_name":"Bill","student_email":"bill@gmail.com"},{"teacher_name":"Chris","teacher_email":"chris@gmail.com","student_name":"Ricky","student_email":"ricky@gmail.com"},{"teacher_name":"Chris","teacher_email":"chris@gmail.com","student_name":"Fred","student_email":"fred@gmail.com"},{"teacher_name":"Fred","teacher_email":"fred@gmail.com","student_name":"Eric","student_email":"eric@gmail.com"},{"teacher_name":"Jack","teacher_email":"jack@gmail.com","student_name":"Wanda","student_email":"wanda@gmail.com"},{"teacher_name":"Jack","teacher_email":"jack@gmail.com","student_name":"King","student_email":"king@gmail.com"},{"teacher_name":"Finn","teacher_email":"finn@gmail.com","student_name":"Jill","student_email":"jill@gmail.com"},{"teacher_name":"Finn","teacher_email":"finn@gmail.com","student_name":"Queen","student_email":"queen@gmail.com"},{"teacher_name":"Finn","teacher_email":"finn@gmail.com","student_name":"Gon","student_email":"gon@gmail.com"},{"teacher_name":"Queen","teacher_email":"queen@gmail.com","student_name":"Murph","student_email":"murph@gmail.com"},{"teacher_name":"Queen","teacher_email":"queen@gmail.com","student_name":"Don","student_email":"don@gmail.com"}]`
+      );
+      var tree = reformatData(records_dummy);
+
+      Draw(tree);
+    </script>
+  </body>
+</html>
